@@ -11,10 +11,11 @@ import io.ppillai.spring.redis.repository.model.UserProfileRequest;
 
 @Repository
 public class RedisUserRepository implements UserRepository {
+	private static final String REGISTERED_USERS_CACHENAME = "registeredUsers";
 	private static final Logger LOG = LoggerFactory.getLogger(RedisUserRepository.class);
 	
 	@Override
-	@Cacheable(value = { "registeredUsers" },key="#req.id",unless="#result==null")
+	@Cacheable(value = { REGISTERED_USERS_CACHENAME },key="#req.id",unless="#result==null")
 	public UserProfile getUser(UserProfileRequest req) {
 		UserProfile userProfile = null;
 		
