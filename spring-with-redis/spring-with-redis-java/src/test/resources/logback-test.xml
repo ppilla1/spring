@@ -6,9 +6,9 @@
 		</encoder>
 	</appender>
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${domain-repo.log.home}/test-domain-repo.log</file>
+		<file>${log.home}/spring-with-redis.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${domain-repo.log.home}/test-domain-repo.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${log.home}/spring-with-redis.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>7</maxHistory>
 		</rollingPolicy>
 		<encoder>
@@ -16,7 +16,7 @@
 		</encoder>
 	</appender>
 	
-	<root level="INFO">
+	<root level="${log.level}">
 		<appender-ref ref="STDOUT"/>
 		<appender-ref ref="FILE"/>
 	</root>
