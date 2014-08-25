@@ -1,4 +1,4 @@
-package io.ppillai.spring.redis;
+package io.ppillai.spring.redis.repository;
 
 /**
  * Hello world!
