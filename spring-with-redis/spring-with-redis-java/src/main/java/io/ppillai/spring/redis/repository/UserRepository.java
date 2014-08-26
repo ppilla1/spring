@@ -5,4 +5,6 @@ import io.ppillai.spring.redis.repository.model.UserProfileRequest;
 
 public interface UserRepository {
 	public UserProfile getUser(UserProfileRequest req);
+	public void removeUser(UserProfileRequest req);
+	public void removeAllUsers();
 }

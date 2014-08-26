@@ -37,6 +37,40 @@ public class IntegrationTestUserRepository {
 	}
 	
 	@Test
+	public void remove_allusers(){
+		UserProfileRequest req = new UserProfileRequest();
+		req.setId("rkorla");
+		UserProfile user = repository.getUser(req);
+		assertNotNull(user);
+		LOG.info("UserProfile : {}", getJSON(user));
+		
+		req = new UserProfileRequest();
+		req.setId("rkorla");
+		user = repository.getUser(req);
+		assertNotNull(user);
+		LOG.info("UserProfile : {}", getJSON(user));		
+		
+		repository.removeAllUsers();
+	}
+	
+	@Test
+	public void remove_user(){
+		UserProfileRequest req = new UserProfileRequest();
+		req.setId("rkorla");
+		UserProfile user = repository.getUser(req);
+		assertNotNull(user);
+		LOG.info("UserProfile : {}", getJSON(user));
+		
+		req = new UserProfileRequest();
+		req.setId("rkorla");
+		user = repository.getUser(req);
+		assertNotNull(user);
+		LOG.info("UserProfile : {}", getJSON(user));		
+		
+		repository.removeUser(req);
+	}
+	
+	@Test
 	public void get_user(){
 		UserProfileRequest req = new UserProfileRequest();
 		req.setId("ppillai");

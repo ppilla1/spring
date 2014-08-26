@@ -3,6 +3,7 @@ package io.ppillai.spring.redis.repository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -46,4 +47,16 @@ public class RedisUserRepository implements UserRepository {
 		return userProfile;
 	}
 
+	@Override
+	@CacheEvict(value={REGISTERED_USERS_CACHE},key="#req.id",condition="#req!=null && #req.id!=null",beforeInvocation=false)
+	public void removeUser(UserProfileRequest req){
+		LOG.info("Removing UserProfile {}", req.getId());
+	}
+	
+	@Override
+	@CacheEvict(value={REGISTERED_USERS_CACHE},allEntries=true)
+	public void removeAllUsers(){
+		LOG.info("Removing all UserProfile[s]");
+	}
+	
 }
