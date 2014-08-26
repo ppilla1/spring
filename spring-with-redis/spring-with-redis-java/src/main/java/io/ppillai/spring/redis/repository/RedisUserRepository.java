@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import io.ppillai.spring.redis.repository.model.UserProfile;
 import io.ppillai.spring.redis.repository.model.UserProfileRequest;
-
+/**
+ * Redis based user repository in spring
+ * @author ppillai
+ *
+ */
 @Repository
 public class RedisUserRepository implements UserRepository {
 	private static final String REGISTERED_USERS_CACHE = "registeredUsers";
