@@ -51,4 +51,26 @@ public class IntegrationTestUserRepository {
 		LOG.info("UserProfile : {}", getJSON(user));		
 	}
 
+	@Test
+	public void get_user_for_NullOrEmptyOrNonExistingUserId(){
+		UserProfileRequest req = null;
+		UserProfile user = repository.getUser(req);
+		assertNull(user);
+
+		req = new UserProfileRequest();
+		user = repository.getUser(req);
+		assertNull(user);
+		
+		req = new UserProfileRequest();
+		req.setId("");
+		user = repository.getUser(req);
+		assertNull(user);
+
+		req = new UserProfileRequest();
+		req.setId("ksomal");
+		user = repository.getUser(req);
+		assertNull(user);
+
+		
+	}
 }

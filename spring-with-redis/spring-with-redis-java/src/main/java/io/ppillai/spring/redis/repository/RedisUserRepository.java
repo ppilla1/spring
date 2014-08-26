@@ -15,7 +15,7 @@ public class RedisUserRepository implements UserRepository {
 	private static final Logger LOG = LoggerFactory.getLogger(RedisUserRepository.class);
 	
 	@Override
-	@Cacheable(value = { REGISTERED_USERS_CACHE },key="#req.id",unless="#result==null")
+	@Cacheable(value = { REGISTERED_USERS_CACHE },key="#req.id",condition="#req!=null && #req.id!=null",unless="#result==null")
 	public UserProfile getUser(UserProfileRequest req) {
 		UserProfile userProfile = null;
 		
