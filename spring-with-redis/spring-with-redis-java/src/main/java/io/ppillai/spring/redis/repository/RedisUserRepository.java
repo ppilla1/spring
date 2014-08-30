@@ -1,7 +1,6 @@
 package io.ppillai.spring.redis.repository;
 
 import javax.annotation.Resource;
-import javax.naming.ldap.Rdn;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
