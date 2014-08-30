@@ -6,6 +6,7 @@
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:redis="http://www.springframework.org/schema/redis"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,6 +14,8 @@
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/cache
 		http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/redis
+		http://www.springframework.org/schema/redis/spring-redis.xsd
 	"
 >
 	<context:component-scan base-package="io.ppillai.spring.redis"/>
@@ -21,7 +24,7 @@
 	<cache:annotation-driven />
 	
 	<!-- Redis connection factory -->
-	<bean id="jedisConnectionFactory"
+	<bean id="redisConnectionFactory"
 		  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		  p:hostName="${redis.hostname}"
 		  p:port="${redis.port}"
@@ -35,7 +38,7 @@
 	<!-- Redis spring cache configuration -->
 	<bean id="jedisCacheTemplate"
 		  class="org.springframework.data.redis.core.RedisTemplate"
-		  p:connectionFactory-ref="jedisConnectionFactory"
+		  p:connectionFactory-ref="redisConnectionFactory"
 		  p:keySerializer-ref="stringRedisSerializer"
 		  p:hashKeySerializer-ref="stringRedisSerializer"
 	/>
@@ -49,8 +52,12 @@
 	<!-- Redis spring pub/sub configuration -->
 	<bean id="jedisPubSubTemplate"
 		  class="org.springframework.data.redis.core.RedisTemplate"
-		  p:connectionFactory-ref="jedisConnectionFactory"
-		  p:keySerializer-ref="stringRedisSerializer"
+		  p:connectionFactory-ref="redisConnectionFactory"
 	/>
 	
+	<bean id="registerUserProfileSub" class="io.ppillai.spring.redis.repository.RedisSubRegisterUserService"/>
+	
+	<redis:listener-container>
+		<redis:listener ref="registerUserProfileSub" method="onMessage" topic="new.user"/>
+	</redis:listener-container>
 </beans>

@@ -23,6 +23,9 @@ public class IntegrationTestUserRepository {
 	@Autowired
 	private UserRepository repository;
 
+	@Autowired
+	private RegisterUserService registerUserService;
+	
 	private String getJSON(Object obj) {
 		ObjectMapper mapper = new ObjectMapper();
 		String json=null;
@@ -37,46 +40,52 @@ public class IntegrationTestUserRepository {
 	}
 	
 	@Test
-	public void add_get_remove_deleteAllUsers(){
-		UserProfile user = null;
-		UserProfileRequest req = null;
+	public void publish_subscribe_userProfileRegistrationService(){
+		UserProfile user=new UserProfile();
+		user.setId("rkorla");
+		user.setFirstName("RaviKumar");
+		user.setLastName("Korlapati");
+		
+		registerUserService.registerUser(user);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			LOG.info("Exception occured : {}", e);
+		}
+		UserProfileRequest req = new UserProfileRequest();
+		req.setId("rkorla");
+		user=repository.getUser(req);
+		assertNotNull(user);
+		
+		req = new UserProfileRequest();
+		req.setId("rkorla");
+		user=repository.getUser(req);
+		assertNotNull(user);
+		
+		LOG.info("UserProfile : {}",getJSON(user));
 		
 		user = new UserProfile();
 		user.setId("ppillai");
 		user.setFirstName("Prashant");
 		user.setLastName("Pillai");
-		
-		req=repository.addUser(user);
-		assertNotNull(req);
-		
-		user=repository.getUser(req);
-		assertNotNull(user);
-		
-		LOG.info("UserProfile : {}",getJSON(user));
-		
-		user=repository.getUser(req);
-		assertNotNull(user);
-		
-		LOG.info("UserProfile : {}",getJSON(user));
 
-		user = new UserProfile();
-		user.setId("foo");
-		user.setFirstName("FooUser");
-		user.setLastName("Foo");
-		
-		req=repository.addUser(user);
-		assertNotNull(req);
+		registerUserService.registerUser(user);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			LOG.info("Exception occured : {}", e);
+		}
 
-		user=repository.getUser(req);
-		assertNotNull(user);
-		
-		LOG.info("UserProfile : {}",getJSON(user));
-
-		req=new UserProfileRequest();
+		req = new UserProfileRequest();
 		req.setId("ppillai");
+		user=repository.getUser(req);
+		assertNotNull(user);
+		LOG.info("UserProfile : {}",getJSON(user));
+		
+		req = new UserProfileRequest();
+		req.setId("rkorla");
 		repository.removeUser(req);
 		
 		repository.removeAllUsers();
-		
 	}
 }
