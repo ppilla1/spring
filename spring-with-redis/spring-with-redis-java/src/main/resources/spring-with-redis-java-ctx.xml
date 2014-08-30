@@ -37,6 +37,7 @@
 		  class="org.springframework.data.redis.core.RedisTemplate"
 		  p:connectionFactory-ref="jedisConnectionFactory"
 		  p:keySerializer-ref="stringRedisSerializer"
+		  p:hashKeySerializer-ref="stringRedisSerializer"
 	/>
 	
 	<bean id="cacheManager"
@@ -44,4 +45,12 @@
 		  c:template-ref="jedisCacheTemplate"
 		  p:defaultExpiration="${redis.cache.expiry}" 
 	/>
+	
+	<!-- Redis spring pub/sub configuration -->
+	<bean id="jedisPubSubTemplate"
+		  class="org.springframework.data.redis.core.RedisTemplate"
+		  p:connectionFactory-ref="jedisConnectionFactory"
+		  p:keySerializer-ref="stringRedisSerializer"
+	/>
+	
 </beans>
