@@ -28,5 +28,8 @@
   </properties>
   <modules>
     <module>spring-with-redis-java</module>
+    <module>spring-webservices-with-soap</module>
+    <module>spring-ws-with-soap</module>
+    <module>spring-with-soap</module>
   </modules>
 </project>
